@@ -36,6 +36,9 @@ io.on('connection', (socket) => {
 	});
 });
 
+app.get('/', (req, res) => {
+	res.send("Welcome to Taxi App");
+});
 app.get('/sender', (req, res) => {
 	res.sendFile(__dirname + '/sender.html');
 });
