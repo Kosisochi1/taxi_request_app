@@ -76,7 +76,7 @@ class OrderingApp {
 			this.sendEvent({
 				socket: this.socketUserMap.get(driver.id),
 				data: { order },
-				eventname: 'orderRequested',
+				eventname: 'requestOrder',
 			});
 		}
 

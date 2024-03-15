@@ -65,7 +65,7 @@
 			localStorage.setItem('driverId', data.driver.id);
 		});
 
-		socket.on('orderRequested', (data) => {
+		socket.on('requestOrder', (data) => {
 			console.log(data, 'Here');
 			const notificationContainer = document.getElementById(
 				'notification-container'
