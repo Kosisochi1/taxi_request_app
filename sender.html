@@ -80,7 +80,7 @@
 	</body>
 	<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 	<script>
-		const socket = io('http://localhost:3002', {
+		const socket = io('https://taxi-request-app.onrender.com', {
 			query: {
 				user_type: 'sender',
 				name: 'John Doe',
@@ -161,7 +161,7 @@
 			notificationContainer.appendChild(div);
 		});
 
-		socket.on('orderRejected', (data) => {
+		socket.on('rejectOrder', (data) => {
 			console.log(data);
 
 			const notificationContainer = document.getElementById(

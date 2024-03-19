@@ -41,7 +41,7 @@
 	</body>
 	<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 	<script>
-		const socket = io('http://localhost:3002', {
+		const socket = io('https://taxi-request-app.onrender.com', {
 			query: {
 				user_type: 'driver',
 				name: 'Driver Dan',
@@ -196,9 +196,32 @@
 			}
 
 			if (rejectOrderButton) {
-				rejectOrderButton.disabled = true;
+				// rejectOrderButton.disabled = true;
 				rejectOrderButton.innerHTML = 'Rejected';
 			}
+			const notificationContainer = document.getElementById(
+				'notification-container'
+			);
+
+			const cardContainer = document.getElementById(
+				`${data.order.id}-cardContainer`
+			);
+
+			const div2 = document.createElement('div');
+
+			div2.innerHTML = `<div style="margin: 10px;" class="card">
+		        <h5 class="card-header">Order Request</h5>
+		        <div class="card-body">
+		            <h5 class="card-title">${data.order.driver.name} has rejected your ride </h5>
+		            <p class="card-text">Current Location: ${data.order.current_location}</p>
+		            <p class="card-text">Destination: ${data.order.destination}</p>
+		            <p class="card-text">Price: N${data.order.price}</p>
+					<button id="${data.order.id}-accept-order" href="#" class="btn btn-primary" disabled>Accepted</button>
+                <button id="${data.order.id}-finish-ride" href="#" class="btn btn-danger">finish ride</button>
+		        </div>
+		        </div>`;
+
+			notificationContainer.replaceChild(div2, cardContainer);
 		});
 		socket.on('finishedRide', (data) => {
 			const finishRideBtn = document.getElementById(

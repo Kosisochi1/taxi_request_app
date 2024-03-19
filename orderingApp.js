@@ -146,6 +146,8 @@ class OrderingApp {
 			(sender) => sender.id === _order.sender.id
 		);
 		_order.status = 'rejected';
+		_order.driver = driver;
+
 		clearTimeout(_order.timer);
 
 		// const driverSocket = this.socketUserMap.get(driver.id);
@@ -155,11 +157,26 @@ class OrderingApp {
 			data: { order: _order },
 			eventname: 'orderRejected',
 		});
-		this.sendEvent({
-			socket: this.socketUserMap.get(sender.id),
-			data: { order: _order },
-			eventname: 'orderRejected',
-		});
+
+		for (const driver of this.drivers) {
+			if (driver.id == driver_id) {
+				// const driverSocket = this.socketUserMap.get(driver.id);
+				// driverSocket.emit('orderAccepted', { order: _order });
+				this.sendEvent({
+					socket: this.socketUserMap.get(driver.id),
+					data: { order: _order },
+					eventname: 'orderRejected',
+				});
+			} else {
+				// const missedSocket = this.socketUserMap.get(driver.id);
+				// missedSocket.emit('missedOrder', { order: _order });
+				this.sendEvent({
+					socket: this.socketUserMap.get(driver.id),
+					data: { order: _order },
+					eventname: 'missedOrder',
+				});
+			}
+		}
 	}
 	finishRide(updateOrder) {
 		const { id, driver_id } = updateOrder;
